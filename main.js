@@ -6,12 +6,15 @@ const settings = {
     width: 600,
     height: 400,
     carWidth: 100,
+    bulletSpeed: 10,
     keys: {
         left: false,
-        right: false
+        right: false,
+        up: false,
+        down: false
     }
 }
-let stage, car;
+let stage, car, bullets=[];
 function init(){
     stage = new createjs.Stage("stage");//the id of the canvas
     createjs.Ticker.framerate = 60;
@@ -54,21 +57,65 @@ function init(){
         if(e.key === "ArrowLeft"){
             settings.keys.left=true;
         }
+        if(e.key === "ArrowRight"){
+            settings.keys.right=true;
+        }
+        if(e.key === "ArrowUp"){
+            settings.keys.up=true;
+        }
+        if(e.key === "ArrowDown"){
+            settings.keys.down=true;
+        }
     })
     window.addEventListener("keyup", e=>{
         console.log(e.key);
         if(e.key === "ArrowLeft"){
             settings.keys.left=false;
         }
+        if(e.key === "ArrowRight"){
+            settings.keys.right=false;
+        }
+        if(e.key === "ArrowUp"){
+            settings.keys.up=false;
+        }
+        if(e.key === "ArrowDown"){
+            settings.keys.down=false;
+        }
+        if(e.key === " "){
+            shoot();
+        }
     })
+}
+function shoot(){
+    let bullet = new createjs.Shape();
+    bullet.graphics.beginFill("#fff").drawCircle(0,0,4);
+    bullet.x = car.x;
+    bullet.y=car.y;
+    bullets.push(bullet);
+    stage.addChild(bullet);
 }
 //github.com/jofhatkea/
 
+function moveBullets(){
+    bullets.forEach(b=>{
+        b.y-=settings.bulletSpeed;
+    });
+}
 function tock(e){//refractoring
-    
+    moveBullets();
     if(settings.keys.left){
         car.x-=settings.speed;
     }
+    if(settings.keys.right){
+        car.x+=settings.speed;
+    }
+    if(settings.keys.up){
+        car.y-=settings.speed;
+    }
+    if(settings.keys.down){
+        car.y+=settings.speed;
+    }
+
     /*if(car.direction==="right"){
         car.x+=settings.speed;
         if(car.x>settings.width-settings.carWidth){
