@@ -1,6 +1,11 @@
 window.addEventListener("load", init);
 
-
+const settings = {
+    speed: 10,
+    width: 600,
+    height: 400,
+    carWidth: 100
+}
 let stage, car;
 function init(){
     stage = new createjs.Stage("stage");//the id of the canvas
@@ -9,10 +14,12 @@ function init(){
     console.log("load event happened");
 
     car = new createjs.Container();
+    car.brand = "Ferrari";
+    car.direction="right";
 
     let box = new createjs.Shape();
     box.graphics.beginFill("#bada55");
-    box.graphics.drawRect(0,0, 100, 60);
+    box.graphics.drawRect(0,0, settings.carWidth, 60);
     car.addChild(box);
 
     let circle = new createjs.Shape();
@@ -35,10 +42,26 @@ function init(){
 
 function tock(e){
     //console.log("redraw")
-    car.x+=10;
-    if(car.x>600){
-        car.x=-100;
+    
+    if(car.direction==="right"){
+        car.x+=settings.speed;
+        if(car.x>settings.width-settings.carWidth){
+            car.direction="left";
+        }
+    } else {
+        car.x-=settings.speed;
+        if(car.x<=0){
+            car.direction="right";
+        }
     }
     stage.update(e);
 
-}
+}//back 10:40
+
+
+
+//1 a game, 
+
+//2 code journey
+
+//3 what createjs can do
