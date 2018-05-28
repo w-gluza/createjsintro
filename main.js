@@ -1,7 +1,7 @@
 window.addEventListener("load", init);
 
 const settings = {
-    speed: 10,
+    speed: 2,
     width: 600,
     height: 400,
     carWidth: 100
@@ -36,13 +36,17 @@ function init(){
     circle2.y=60;
     car.addChild(circle2);
     stage.addChild(car);
-
+    car.addEventListener("click", ()=>{
+        if(car.direction==="right"){
+            car.direction="left";
+        } else {
+            car.direction="right";
+        }
+    });
 }
 //github.com/jofhatkea/
 
 function tock(e){
-    //console.log("redraw")
-    
     if(car.direction==="right"){
         car.x+=settings.speed;
         if(car.x>settings.width-settings.carWidth){
@@ -56,7 +60,7 @@ function tock(e){
     }
     stage.update(e);
 
-}//back 10:40
+}
 
 
 
