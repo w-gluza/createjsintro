@@ -1,22 +1,28 @@
+"use strict";
 window.addEventListener("load", init);
 
 const settings = {
     speed: 2,
     width: 600,
     height: 400,
-    carWidth: 100
+    carWidth: 100,
+    keys: {
+        left: false,
+        right: false
+    }
 }
 let stage, car;
 function init(){
     stage = new createjs.Stage("stage");//the id of the canvas
-    createjs.Ticker.framerate = 30;
+    createjs.Ticker.framerate = 60;
     createjs.Ticker.addEventListener("tick", tock);
     console.log("load event happened");
 
     car = new createjs.Container();
     car.brand = "Ferrari";
     car.direction="right";
-
+    car.x = settings.width/2-settings.carWidth/2;
+    car.y=settings.height-60;
     let box = new createjs.Shape();
     box.graphics.beginFill("#bada55");
     box.graphics.drawRect(0,0, settings.carWidth, 60);
@@ -43,11 +49,27 @@ function init(){
             car.direction="right";
         }
     });
+    window.addEventListener("keydown", e=>{
+        console.log(e.key);
+        if(e.key === "ArrowLeft"){
+            settings.keys.left=true;
+        }
+    })
+    window.addEventListener("keyup", e=>{
+        console.log(e.key);
+        if(e.key === "ArrowLeft"){
+            settings.keys.left=false;
+        }
+    })
 }
 //github.com/jofhatkea/
 
-function tock(e){
-    if(car.direction==="right"){
+function tock(e){//refractoring
+    
+    if(settings.keys.left){
+        car.x-=settings.speed;
+    }
+    /*if(car.direction==="right"){
         car.x+=settings.speed;
         if(car.x>settings.width-settings.carWidth){
             car.direction="left";
@@ -57,7 +79,7 @@ function tock(e){
         if(car.x<=0){
             car.direction="right";
         }
-    }
+    }*/
     stage.update(e);
 
 }
