@@ -10,6 +10,8 @@ The following is an (on purpose) very loose plan for the day, you decide where w
 - Adding enemies
 - Shooting enemies
 - Highscores
+    - `localStorage`?
 - Showing the score
- - Either with `new createjs.Text("hi mom", "30px Verdana", "#fff")` or vanilla JS
+    - Either with `new createjs.Text("hi mom", "30px Verdana", "#fff")` or vanilla JS
 - Enemies colliding with the player
+- Merge conflicts?
