@@ -1,3 +1,4 @@
+/* global window,createjs */
 "use strict";
 window.addEventListener("load", init);
 
@@ -101,6 +102,21 @@ function moveBullets(){
         b.y-=settings.bulletSpeed;
     });
 }
+function moveHero(){
+    if(settings.key.left){
+        car.x-=settings.speed;
+        if(car.x<0){
+            car.x=0;
+        }
+    }
+    if(settings.key.right){
+        car.x+= settings.speed;
+        if(car.x+settings.carWidth>settings.width){
+            car.x+settings.width-settings.carWidth;
+        }
+    }
+
+}
 function tock(e){//refractoring
     moveBullets();
     if(settings.keys.left){
@@ -127,6 +143,9 @@ function tock(e){//refractoring
             car.direction="right";
         }
     }*/
+    settings.counter++
+    moveBullets();
+    moveHero();
     stage.update(e);
 
 }
